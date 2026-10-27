@@ -18,6 +18,10 @@ output "oidc_provider_arn" {
 }
 */
 
+output "cluster_endpoint" {
+  description = "The endpoint for the EKS cluster"
+  value       = module.eks-cluster.cluster_endpoint
+}
 
 resource "aws_ssm_parameter" "cluster_access" {
   name  = "/eks/eks_cluster_${var.env}/endpoint"
