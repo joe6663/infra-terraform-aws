@@ -1,0 +1,29 @@
+configs:
+  params:
+    # Keeps internal pods running on plain HTTP
+    server.insecure: "true"
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: "alb"
+    
+    # Matches your exact Terraform annotations 1-to-1
+    annotations:
+      alb.ingress.kubernetes.io/scheme: "internet-facing"
+      alb.ingress.kubernetes.io/target-type: "ip"
+      alb.ingress.kubernetes.io/backend-protocol: "HTTP"
+      alb.ingress.kubernetes.io/healthcheck-path: "/healthz"
+      alb.ingress.kubernetes.io/healthcheck-protocol: "HTTP"
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+
+    # THE FIX FOR THE WILDCARD (*): 
+    # Leaving the host string empty ("") tells Helm not to inject a 'host:' key into the 
+    # generated Ingress manifest, creating a catch-all wildcard for the AWS ALB.
+    hosts:
+      - ""
+
+    # Explicitly structures the path array to avoid the chart's default root fallback rules
+    paths:
+      - /
+    pathType: Prefix
