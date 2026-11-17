@@ -11,6 +11,7 @@ output "karpenter_queue_name" {
 
 module "eks_addons" {
   source = "../../../modules/eks-addons"
+  env               = var.env
   cluster_name      = local.cluster_access.cluster_name
   argocd_values_raw = file("${path.module}/argocd-values.yaml")
   vpc_id            = local.cluster_access.vpc_id

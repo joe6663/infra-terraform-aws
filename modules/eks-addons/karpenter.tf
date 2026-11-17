@@ -5,8 +5,8 @@ module "karpenter" {
   cluster_name = local.cluster_access.cluster_name
   enable_inline_policy = true
 
-/*
-  enable_pod_identity             = true
+
+  // enable_pod_identity_association = true
   create_pod_identity_association = true
 
   create_node_iam_role          = true
@@ -14,8 +14,8 @@ module "karpenter" {
   node_iam_role_name            = "${var.cluster_name}-karpenter-node"
   create_access_entry           = true
 
-  enable_interruption_queue = true
-*/
+  enable_spot_termination = true
+
   node_iam_role_additional_policies = {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }

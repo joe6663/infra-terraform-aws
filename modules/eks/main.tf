@@ -77,23 +77,24 @@ module "eks-cluster" {
     provider_key_arn = aws_kms_key.eks.arn
   }
 
-
   eks_managed_node_groups = {
-    # sys nodes (ON DEMAND)
-    # sys pods nodeAffinity as system
-    system_nodes = {
-      name         = "${var.env}-system-nodes"
+    for idx, subnet_id in module.eks-vpc.private_subnets :
+    "system_nodes_${idx}" => {
+      name = "${var.env}-system-nodes-${idx}"
+
+      subnet_ids = [subnet_id]
+
       min_size     = var.system_node_min_size // HA 3 zone
-      max_size     = var.system_node_max_size //
-      desired_size = var.system_node_desired_size // make it 3
+      max_size     = var.system_node_max_size
+      desired_size = var.system_node_desired_size
 
-
-      instance_types = ["m6i.large"] # 2 vCPU, 8 GiB RAM
+      instance_types = ["m6i.large"]
       capacity_type  = "ON_DEMAND"
 
       labels = {
         role = "system"
       }
+
       taints = {
         dedicated = {
           key    = "dedicated"
@@ -101,10 +102,9 @@ module "eks-cluster" {
           effect = "NO_SCHEDULE"
         }
       }
+      
     }
   }
-
-
 
   # -----------------------------------------------------------------
   # Map of attribute maps for all enabled EKS cluster addons
