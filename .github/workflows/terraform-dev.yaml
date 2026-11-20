@@ -25,8 +25,8 @@ on:
 env:
   name: dev
   TF_VERSION: latest
-  TF_WORKING_DIR_1 : infra-terraform-aws/environments/dev/eks
-  TF_WORKING_DIR_2 : infra-terraform-aws/environments/dev/eks-addons
+  TF_WORKING_DIR_1 : environments/dev/eks
+  TF_WORKING_DIR_2 : environments/dev/eks-addons
 
 jobs:
   terraform_validate:
