@@ -29,6 +29,9 @@ env:
   TF_WORKING_DIR_2 : environments/dev/eks-addons
 
 jobs:
+
+######### -------------- VALIDATE TERRAFORM CONFIGS -------------- #########
+
   terraform_validate:
     name: Terraform Dev validate
     runs-on: ubuntu-latest
@@ -69,3 +72,29 @@ jobs:
       - name: Terraform validate
         working-directory: ${{ env.TF_WORKING_DIR_2 }}
         run: terraform validate
+
+######### -------------- SECURITY SCAN TERRAFORM -------------- #########
+
+  terraform_security_scan:
+    name: Terraform Dev security scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
+
+      - name: install checkov
+        run: |
+          curl -sSL https://raw.githubusercontent.com/bridgecrewio/checkov/master/install.sh | bash
+
+# --- EKS Cluster ---
+
+      - name: Terraform security scan
+        working-directory: ${{ env.TF_WORKING_DIR_1 }}
+        run: checkov -d . --framework terraform --quiet
+
+# --- EKS Addons ---
+  
+      - name: Terraform security scan
+        working-directory: ${{ env.TF_WORKING_DIR_2 }}
+        run: checkov -d . --framework terraform --quiet
