@@ -17,11 +17,11 @@ output "cluster_token" {
 }
 */
 
-data aws_ssm_parameter "cluster_access" {
+data "aws_ssm_parameter" "cluster_access" {
   name = "/eks/eks_cluster/endpoint"
 }
 
-data aws_ssm_parameter "oidc_provider" {
+data "aws_ssm_parameter" "oidc_provider" {
   name = "/eks/eks_cluster/oidc_provider"
 }
 

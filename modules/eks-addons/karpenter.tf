@@ -2,7 +2,7 @@ module "karpenter" {
   source  = "terraform-aws-modules/eks/aws//modules/karpenter"
   version = "~> 21.0"
 
-  cluster_name = local.cluster_access.cluster_name
+  cluster_name         = local.cluster_access.cluster_name
   enable_inline_policy = true
 
 

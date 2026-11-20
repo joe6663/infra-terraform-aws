@@ -4,6 +4,6 @@ resource "aws_kms_key" "eks" {
   enable_key_rotation     = true
 
   tags = {
-    Name        = "eks-secrets"
+    Name = "eks-secrets"
   }
 }

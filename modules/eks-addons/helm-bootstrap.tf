@@ -62,7 +62,7 @@ resource "kubernetes_ingress_v1" "argocd_alb_ingress" {
   metadata {
     name      = "argocd-server-explicit-ingress"
     namespace = "argocd"
-    
+
     annotations = {
       "alb.ingress.kubernetes.io/scheme"               = "internet-facing"
       "alb.ingress.kubernetes.io/target-type"          = "ip"
@@ -82,12 +82,12 @@ resource "kubernetes_ingress_v1" "argocd_alb_ingress" {
         path {
           path      = "/"
           path_type = "Prefix"
-          
+
           backend {
             service {
               name = "argocd-server"
               port {
-                number = 80  # Forces explicit mapping straight to the exposed service port
+                number = 80 # Forces explicit mapping straight to the exposed service port
               }
             }
           }
@@ -95,7 +95,7 @@ resource "kubernetes_ingress_v1" "argocd_alb_ingress" {
       }
     }
   }
-    # Forces Terraform to wait until both charts are fully running inside EKS before exposing the endpoint
+  # Forces Terraform to wait until both charts are fully running inside EKS before exposing the endpoint
   depends_on = [
     helm_release.aws_load_balancer_controller,
     helm_release.argocd

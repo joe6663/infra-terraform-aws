@@ -16,14 +16,14 @@ module "eks-vpc" {
   // one_nat_gateway_per_az = false # Explicitly tell the module to map all private subnets to the single NAT
 
   public_subnet_tags = {
-    "kubernetes.io/role/elb"            = "1"
+    "kubernetes.io/role/elb"                    = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared" # Added cluster discovery tag
   }
 
   private_subnet_tags = {
-    "kubernetes.io/role/internal-elb"   = "1"
+    "kubernetes.io/role/internal-elb"           = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared" # Added cluster discovery tag
-    "karpenter.sh/discovery"            = var.cluster_name
+    "karpenter.sh/discovery"                    = var.cluster_name
   }
 
   tags = {
@@ -102,7 +102,7 @@ module "eks-cluster" {
           effect = "NO_SCHEDULE"
         }
       }
-      
+
     }
   }
 
