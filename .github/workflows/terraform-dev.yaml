@@ -1,1 +1,69 @@
+name: Terraform Dev
 
+on:
+
+  push:
+
+    branches:
+      - feature/karpenter
+    paths:
+      - environments/dev/**
+      - modules/**
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
+    paths:
+      - environments/dev/**
+      - modules/**
+
+env:
+  name: dev
+  TF_VERSION: 1.7.6
+  TF_WORKING_DIR_1 : infra-terraform-aws/environments/dev/eks
+  TF_WORKING_DIR_2 : infra-terraform-aws/environments/dev/eks-addons
+
+jobs:
+  terraform_validate:
+    name: Terraform Dev validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e #v4.0.1
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+# --- EKS Cluster ---
+
+      - name: Terraform Validate
+        working-directory: ${{ env.TF_WORKING_DIR_1 }}
+        run: terraform fmt -check -recursive 
+
+      - name: Terraform init
+        working-directory: ${{ env.TF_WORKING_DIR_1 }}
+        run: terraform init -backend = false
+
+      - name: Terraform validate
+        working-directory: ${{ env.TF_WORKING_DIR_1 }}
+        run: terraform validate
+
+# --- EKS Addons ---
+    
+      - name: Terraform Validate
+        working-directory: ${{ env.TF_WORKING_DIR_2 }}
+        run: terraform fmt -check -recursive 
+
+      - name: Terraform init
+        working-directory: ${{ env.TF_WORKING_DIR_2 }}
+        run: terraform init -backend = false
+
+      - name: Terraform validate
+        working-directory: ${{ env.TF_WORKING_DIR_2 }}
+        run: terraform validate
