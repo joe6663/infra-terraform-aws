@@ -9,6 +9,7 @@ on:
     paths:
       - environments/dev/**
       - modules/**
+      - .github/workflows/terraform-dev.yaml
 
   pull_request:
     types:
@@ -19,12 +20,13 @@ on:
     paths:
       - environments/dev/**
       - modules/**
+      - .github/workflows/terraform-dev.yaml
 
 env:
   name: dev
-  TF_VERSION: 1.7.6
-  TF_WORKING_DIR_1 : infra-terraform-aws/environments/dev/eks
-  TF_WORKING_DIR_2 : infra-terraform-aws/environments/dev/eks-addons
+  TF_VERSION: latest
+  TF_WORKING_DIR_1 : environments/dev/eks
+  TF_WORKING_DIR_2 : environments/dev/eks-addons
 
 jobs:
   terraform_validate:
@@ -48,7 +50,7 @@ jobs:
 
       - name: Terraform init
         working-directory: ${{ env.TF_WORKING_DIR_1 }}
-        run: terraform init -backend = false
+        run: terraform init -backend=false
 
       - name: Terraform validate
         working-directory: ${{ env.TF_WORKING_DIR_1 }}
@@ -62,7 +64,7 @@ jobs:
 
       - name: Terraform init
         working-directory: ${{ env.TF_WORKING_DIR_2 }}
-        run: terraform init -backend = false
+        run: terraform init -backend=false
 
       - name: Terraform validate
         working-directory: ${{ env.TF_WORKING_DIR_2 }}

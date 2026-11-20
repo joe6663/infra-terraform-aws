@@ -37,5 +37,5 @@ variable "system_node_min_size" {
 }
 variable "system_node_max_size" {
   type    = number
-  default = 5
+  default = 1
 }

@@ -24,21 +24,21 @@ output "cluster_endpoint" {
 }
 
 resource "aws_ssm_parameter" "cluster_access" {
-  name  = "/eks/eks_cluster_${var.env}/endpoint"
-  type  = "SecureString"
+  name      = "/eks/eks_cluster_${var.env}/endpoint"
+  type      = "SecureString"
   overwrite = true
   value = jsonencode({
-    endpoint = module.eks-cluster.cluster_endpoint
-    cluster_name      = module.eks-cluster.cluster_name
+    endpoint                           = module.eks-cluster.cluster_endpoint
+    cluster_name                       = module.eks-cluster.cluster_name
     cluster_certificate_authority_data = module.eks-cluster.cluster_certificate_authority_data
-    cluster_arn = module.eks-cluster.cluster_arn
-    vpc_id = module.eks-vpc.vpc_id
+    cluster_arn                        = module.eks-cluster.cluster_arn
+    vpc_id                             = module.eks-vpc.vpc_id
   })
 }
 
 resource "aws_ssm_parameter" "oidc_provider" {
-  name  = "/eks/eks_cluster_${var.env}/oidc_provider"
-  type  = "SecureString"
+  name      = "/eks/eks_cluster_${var.env}/oidc_provider"
+  type      = "SecureString"
   overwrite = true
   value = jsonencode({
     oidc_provider_arn = module.eks-cluster.oidc_provider_arn
