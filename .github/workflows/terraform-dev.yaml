@@ -84,8 +84,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
       - name: install checkov
-        run: |
-          curl -sSL https://raw.githubusercontent.com/bridgecrewio/checkov/master/install.sh | bash
+        run: pip install checkov
 
 # --- EKS Cluster ---
 
@@ -94,7 +93,7 @@ jobs:
         run: checkov -d . --framework terraform --quiet
 
 # --- EKS Addons ---
-  
+
       - name: Terraform security scan
         working-directory: ${{ env.TF_WORKING_DIR_2 }}
         run: checkov -d . --framework terraform --quiet
