@@ -9,6 +9,7 @@ on:
     paths:
       - environments/dev/**
       - modules/**
+      - .github/workflows/terraform-dev.yaml
 
   pull_request:
     types:
@@ -19,6 +20,7 @@ on:
     paths:
       - environments/dev/**
       - modules/**
+      - .github/workflows/terraform-dev.yaml
 
 env:
   name: dev
