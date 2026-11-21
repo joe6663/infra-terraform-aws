@@ -1,3 +1,6 @@
+/*
+data "aws_caller_identity" "current" {}
+
 resource "aws_kms_key" "eks" {
   description             = "EKS Secret Encryption Key"
   deletion_window_in_days = 7
@@ -24,3 +27,4 @@ resource "aws_kms_key" "eks" {
     Environment = "DEV"
   }
 }
+*/
