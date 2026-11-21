@@ -126,6 +126,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEV_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
+# --- EKS Cluster ---
+
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR_1 }}
         run: terraform init
@@ -133,3 +135,13 @@ jobs:
       - name: Terraform plan
         working-directory: ${{ env.TF_WORKING_DIR_1 }}
         run: terraform plan -out=tfplan
+
+# --- EKS Addons ---
+
+      - name: Terraform Init
+        working-directory: ${{ env.TF_WORKING_DIR_2 }}
+        run: terraform init
+      
+      - name: Terraform plan
+        working-directory: ${{ env.TF_WORKING_DIR_2 }}
+        run: terraform plan -out=tfplan_addons
