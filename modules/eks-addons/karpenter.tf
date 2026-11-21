@@ -1,5 +1,5 @@
 module "karpenter" {
-  source  = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git//modules/karpenter?ref=5858b0f9652f6c7bdc8f6639a4885ce9221189ef"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git//modules/karpenter?ref=5858b0f9652f6c7bdc8f6639a4885ce9221189ef"
 
 
   cluster_name         = local.cluster_access.cluster_name
