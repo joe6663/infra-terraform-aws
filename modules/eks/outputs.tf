@@ -26,6 +26,7 @@ output "cluster_endpoint" {
 resource "aws_ssm_parameter" "cluster_access" {
   name      = "/eks/eks_cluster_${var.env}/endpoint"
   type      = "SecureString"
+  key_id    = aws_kms_key.eks.arn
   overwrite = true
   value = jsonencode({
     endpoint                           = module.eks-cluster.cluster_endpoint
