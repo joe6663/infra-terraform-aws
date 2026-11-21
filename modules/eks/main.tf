@@ -1,5 +1,5 @@
 module "eks-vpc" {
-  source  = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=577ad620abe00da27a3a0f1e5acee041959fb3be"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=577ad620abe00da27a3a0f1e5acee041959fb3be"
 
   name = var.cluster_name
   cidr = var.cidr
@@ -33,7 +33,7 @@ module "eks-vpc" {
 
 
 module "eks-cluster" {
-  source  = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=25c846a384bc66d16cc801d2f851431deb38de5d"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=25c846a384bc66d16cc801d2f851431deb38de5d"
 
   name               = var.cluster_name
   kubernetes_version = var.kubernetes_version

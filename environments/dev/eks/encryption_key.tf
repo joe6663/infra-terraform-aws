@@ -18,7 +18,7 @@ resource "aws_kms_key" "eks" {
         Resource = "*"
       }
     ]
-  })  
+  })
 
   tags = {
     Environment = "DEV"
