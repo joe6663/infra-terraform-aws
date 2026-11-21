@@ -1,3 +1,5 @@
+/*
+
 # Environment-specific dev IAM users & roles
 resource "aws_iam_user" "dev_namespaced_users" {
   for_each = var.aws_namespaced_user_name
@@ -82,3 +84,4 @@ resource "aws_iam_user_policy" "dev_user_policy" {
     ]
   })
 }
+*/
