@@ -1,5 +1,5 @@
 module "ebs_csi_irsa_role" {
-  source  = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git?ref=42db0208b69c731093a8d46da03f505378841a3"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git?ref=42db0208b69c731093a8d46da03f505378841a3"
 
 
   role_name             = "${var.env}-ebs-csi-role"
@@ -14,7 +14,7 @@ module "ebs_csi_irsa_role" {
 }
 
 module "aws_loadbalacer_controller_irsa_role" {
-  source  = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git?ref=42db0208b69c731093a8d46da03f505378841a3"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git?ref=42db0208b69c731093a8d46da03f505378841a3"
 
 
   role_name                              = "${var.cluster_name}-aws-load-balancer-controller"
