@@ -2,7 +2,7 @@ module "ebs_csi_irsa_role" {
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git//modules/iam-role-for-service-accounts?ref=55514b7873c411040395e024a422684998da77c2"
 
 
-  role_name             = "${var.env}-ebs-csi-role"
+  name             = "${var.env}-ebs-csi-role"
   attach_ebs_csi_policy = true
 
   oidc_providers = {
@@ -17,7 +17,7 @@ module "aws_loadbalacer_controller_irsa_role" {
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git//modules/iam-role-for-service-accounts?ref=55514b7873c411040395e024a422684998da77c2"
 
 
-  role_name                              = "${var.cluster_name}-aws-load-balancer-controller"
+  name                              = "${var.cluster_name}-aws-load-balancer-controller"
   attach_load_balancer_controller_policy = true
 
   oidc_providers = {
