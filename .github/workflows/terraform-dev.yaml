@@ -125,6 +125,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_DEV_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        working-directory: ${{ env.TF_WORKING_DIR_1 }}
+        run: terraform init
       
       - name: Terraform plan
         working-directory: ${{ env.TF_WORKING_DIR_1 }}
