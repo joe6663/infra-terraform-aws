@@ -23,7 +23,7 @@ resource "helm_release" "aws_load_balancer_controller" {
         create = true
         name   = "aws-loadbalancer-controller"
         annotations = {
-          "eks.amazonaws.com/role-arn" = module.aws_loadbalacer_controller_irsa_role.iam_role_arn
+          "eks.amazonaws.com/role-arn" = module.aws_loadbalacer_controller_irsa_role.arn
         }
       }
       nodeSelector = {
