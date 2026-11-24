@@ -1,3 +1,4 @@
+/*
 # Environment-specific dev EKS Access Entries
 resource "aws_eks_access_entry" "dev_namespaced_role_access" {
   cluster_name      = local.cluster_access.cluster_name
@@ -21,3 +22,4 @@ resource "aws_eks_access_policy_association" "eks_access_entry_dev_users_associa
     type = "cluster"
   }
 }
+*/

@@ -7,7 +7,7 @@ resource "aws_eks_addon" "aws_ebs_csi_driver" {
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
   configuration_values        = var.ebs_csi_values_json
-  service_account_role_arn    = module.ebs_csi_irsa_role.iam_role_arn # Passed from root main.tf
+  service_account_role_arn    = module.ebs_csi_irsa_role.arn # Passed from root main.tf
 
   tags = var.tags
 }

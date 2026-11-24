@@ -26,6 +26,7 @@ output "cluster_endpoint" {
 resource "aws_ssm_parameter" "cluster_access" {
   name      = "/eks/eks_cluster_${var.env}/endpoint"
   type      = "SecureString"
+  key_id    = aws_kms_key.eks.arn
   overwrite = true
   value = jsonencode({
     endpoint                           = module.eks-cluster.cluster_endpoint
@@ -39,6 +40,7 @@ resource "aws_ssm_parameter" "cluster_access" {
 resource "aws_ssm_parameter" "oidc_provider" {
   name      = "/eks/eks_cluster_${var.env}/oidc_provider"
   type      = "SecureString"
+  key_id    = aws_kms_key.eks.arn
   overwrite = true
   value = jsonencode({
     oidc_provider_arn = module.eks-cluster.oidc_provider_arn
