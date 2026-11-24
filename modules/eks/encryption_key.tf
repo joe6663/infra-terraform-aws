@@ -1,13 +1,13 @@
 resource "aws_kms_key" "eks" {
   description             = "KMS key for EKS secret encryption"
-  deletion_window_in_days = 30
+  deletion_window_in_days = 7
   enable_key_rotation     = true
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Sid    = "EnableRootAccountFullAccess"
+        Sid    = "EnableRootAccountIAMDelegation"
         Effect = "Allow"
         Principal = {
           AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
@@ -16,10 +16,10 @@ resource "aws_kms_key" "eks" {
         Resource = "*"
       },
       {
-        Sid    = "AllowCICDManagement"
+        Sid    = "AllowCICDKeyAdministration"
         Effect = "Allow"
         Principal = {
-          AWS = aws_iam_role.cicd_role.arn
+          AWS = data.aws_iam_session_context.current.issuer_arn
         }
         Action = [
           "kms:Create*",
@@ -40,10 +40,10 @@ resource "aws_kms_key" "eks" {
         Resource = "*"
       },
       {
-        Sid    = "AllowEKSClusterSecretsEncryption"
+        Sid    = "AllowEKSSecretsEncryptionViaService"
         Effect = "Allow"
         Principal = {
-          AWS = aws_iam_role.eks_cluster.arn
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         }
         Action = [
           "kms:Encrypt",
@@ -56,10 +56,14 @@ resource "aws_kms_key" "eks" {
           "kms:RevokeGrant"
         ]
         Resource = "*"
+        Condition = {
+          StringEquals = {
+            "kms:ViaService" = "eks.${data.aws_region.current.name}.amazonaws.com"
+          }
+        }
       }
     ]
   })
-  
   /*
   policy = jsonencode({
     Version = "2012-10-17"
@@ -70,7 +74,7 @@ resource "aws_kms_key" "eks" {
         Effect = "Allow"
 
         Principal = {
-          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+          AWS = data.aws_caller_identity.current.arn
         }
 
         Action   = "kms:*"
