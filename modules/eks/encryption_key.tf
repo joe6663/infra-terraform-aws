@@ -19,7 +19,7 @@ resource "aws_kms_key" "eks" {
         Sid    = "AllowCICDKeyAdministration"
         Effect = "Allow"
         Principal = {
-          AWS = data.aws_iam_session_context.current.issuer_arn
+          AWS = data.aws_iam_session_context.current.issuer_arn // awscaller_identity.current.arn will have duplicate data hence aws_iam_session_context.current.issuer_arn is used to avoid duplicate data
         }
         Action = [
           "kms:Create*",
